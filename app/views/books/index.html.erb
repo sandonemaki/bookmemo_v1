@@ -4,8 +4,17 @@
       <h1 class="el_lv1hedding">
         本の一覧
       </h1>
-
-      <%= link_to("本の登録", "/books/new") %>
+      <div>
+        <%= link_to("本の登録", "/books/new") %>
+      </div>
+      <% books.each do |book| %>
+        <div>
+          『
+          <%= book.book_title %>
+          』
+          <%= book.author %>
+        </div>
+      <% end %>
 
     </div>
   </div>
