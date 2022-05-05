@@ -9,7 +9,7 @@ kill-server-and-start-server-as-daemon:
 
 .PHONY: release-for-aws
 release-for-aws:
-	ssh -i ${SECRET_KEY_PATH_V2} ${USER_NAME_V2}@${HOST_V2} "bash -c 'cd bookmemo_v1 && git pull && make kill-server-and-start-server-as-daemon'"
+	ssh -i ${SECRET_KEY_PATH_V2} ${USER_NAME_V2}@${HOST_V2} "bash -c 'cd bookmemo_v1 && git pull && kill-server-and-start-server-as-daemon'"
 
 .PHONY: db-create
 db-create:

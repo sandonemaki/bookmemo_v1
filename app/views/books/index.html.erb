@@ -10,7 +10,7 @@
       <% books.each do |book| %>
         <div>
           『
-          <%= book.book_title %>
+          <%= link_to(book.book_title, "/books/#{book.id}") %>
           』
           <%= book.author %>
         </div>

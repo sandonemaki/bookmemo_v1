@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get 'memos/index'
   get "books/new" => "books#new"
+  get "books/:id" => "books#show"
   post "books/create" => "books#create"
+  post "books/:id/page_image_update" => "books#page_image_update"
 
   get "memos/new" => "memos#new"
   post "memos/create" => "memos#create"

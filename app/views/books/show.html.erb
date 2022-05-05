@@ -1,0 +1,31 @@
+<main class="ly_main">
+  <div class="ly_card_article">
+    <div class="bl_maintitle">
+      <h1 class="el_lv1hedding">
+        キャプチャ一覧
+      </h1>
+    </div>
+
+  <!--ここに本の登録情報を表示-->
+  <div>
+    『
+    <%= book.book_title %>
+    』
+    <%= book.author %>
+  </div>
+
+  <!--画像アップロードフォームを表示-->
+  <%= form_tag("/books/#{book.id}/page_image_update", {multipart: true}) do %>
+    <h2>画像</h2>
+    <input name="page_image" type="file">
+    <div>
+      <input type="submit" value="保存">
+    </div>
+  <% end %>
+
+  <!--画像一覧を表示-->
+  <h2>画像一覧</h2>
+    <img src="<%= "/page_images/#{book.id}"%>">
+  </div>
+</main>
+
