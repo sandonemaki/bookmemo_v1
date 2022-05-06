@@ -35,7 +35,8 @@ class BooksController < ApplicationController
     book_title = book.book_title
     book_author = book.author
     book_id = book.id
-    show_book = ShowBook.new(book_title: book_title, author: book_author, id: book_id)
+    book_page_image_name = book.page_image_name
+    show_book = ShowBook.new(book_title: book_title, author: book_author, id: book_id, page_image_name: book_page_image_name)
     render("show", locals:{book: show_book})
   end
 
@@ -49,12 +50,15 @@ class BooksController < ApplicationController
       page_image = params[:page_image]
       # 変数page_imageに対してreadメソッドを用いて画像データを取得
       # ファイルの場所を指定して, ファイルの中身を作成
-      File.binwrite("public/page_images/#{book.id}", page_image.read)
-      # book_id = book.id
-      # viewに渡す分だけShowBookクラスで初期化する
-      # page_image_update = PageImageUpdate.new(id: book_id)
-      # render("show", locals:{page_image: page_image_update})
+      File.binwrite("public/page_images/#{book.page_image_name}", page_image.read)
+      # page_image_update = PageImageUpdate.new(page_image_name: page_image_name)
+      # render("show", locals:{book: page_image_update})
+    end
+    if book.save
       redirect_to(request.referer)
+    else
+      # page_image_update = PageImageUpdate.new(page_image_name: page_image_name)
+      render("show", locals:{book: page_image_update})
     end
   end
 end

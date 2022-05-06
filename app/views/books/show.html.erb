@@ -25,7 +25,9 @@
 
   <!--画像一覧を表示-->
   <h2>画像一覧</h2>
-    <img src="<%= "/page_images/#{book.id}"%>">
+  <img src="<%= "/page_images/#{book.page_image_name}" %>?#{Time.now.to_i}"/>
+  <%# <img src="/page_images/hoge.png?12345"/> %>
+
   </div>
 </main>
 
