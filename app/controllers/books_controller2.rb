@@ -1,4 +1,4 @@
-class BooksController < ApplicationController
+class BooksController2 < ApplicationController
   def index
     books = Book.all.order(created_at: :desc).pluck(:book_title, :author, :id)
     books_view_model = books.map do |book|
@@ -35,9 +35,8 @@ class BooksController < ApplicationController
     book_title = book.book_title
     book_author = book.author
     book_id = book.id
-    #Array データベースに保存されているimage_namesを呼び出している
-    book_page_image_names = book.page_image_names
-    show_book = ShowBook.new(book_title: book_title, author: book_author, id: book_id, page_images: book_page_image_names)
+    book_page_image_name = book.page_image_name
+    show_book = ShowBook.new(book_title: book_title, author: book_author, id: book_id, page_image_name: book_page_image_name)
     render("show", locals:{book: show_book})
   end
 
@@ -45,19 +44,23 @@ class BooksController < ApplicationController
   def page_image_update
     if params[:page_images]
       book = Book.find_by(id: params[:id])
-      # Array
+      # book.id.jpgという名前でbooksテーブルの画像名カラムに保存
       page_images = params[:page_images]
+
       page_images.each {|page_image|
-        # booksテーブルの画像名カラムにユーザーの画像のオリジナルネームを保存
-        book.page_image_name = page_image.original_filename
-        File.binwrite("public/page_images/#{book.page_image_name}", page_image.read)
+        book.page_image_name = page_image.to_io.original_filename #"#{book.id}.jpg"
+        io = File.open("public/page_images/#{book.page_image_name}")
+        io.read(page_image.to_io)
       }
     end
     if book.save
       redirect_to(request.referer)
+      book.page_image_name = "#{book.id}.jpg"
     else
-      page_image_update = PageImageUpdate.new(page_images: page_images)
+      page_image_update = PageImageUpdate.new(page_image_name: page_image_name)
       render("show", locals:{book: page_image_update})
     end
   end
+
+  
 end

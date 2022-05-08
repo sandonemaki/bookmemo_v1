@@ -17,9 +17,9 @@
   <!--画像アップロードフォームを表示-->
   <%= form_tag("/books/#{book.id}/page_image_update", {multipart: true}) do %>
     <h2>画像</h2>
-    <input name="page_image" type="file">
+    <input name="page_images[]", type="file", multiple="true" value=<%= book.page_images %>>
     <div>
-      <input type="submit" value="保存">
+    <input type="submit" value="保存">
     </div>
   <% end %>
 
