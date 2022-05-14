@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_165748) do
+ActiveRecord::Schema.define(version: 2022_05_14_174429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,15 @@ ActiveRecord::Schema.define(version: 2022_05_03_165748) do
     t.string "author", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "page_image_name"
   end
 
+  create_table "page_images", force: :cascade do |t|
+    t.string "page_image_name"
+    t.bigint "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_page_images_on_book_id"
+  end
+
+  add_foreign_key "page_images", "books"
 end
