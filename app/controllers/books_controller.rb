@@ -47,6 +47,7 @@ class BooksController < ApplicationController
       book = Book.find_by(id: params[:id])
       # Array
       page_images = params[:page_images]
+      # book_page_imagesという配列に追加していく
       page_images.each {|page_image|
         # booksテーブルの画像名カラムにユーザーの画像のオリジナルネームを保存
         book.page_image_name = page_image.original_filename
