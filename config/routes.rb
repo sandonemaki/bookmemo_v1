@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "books/create" => "books#create"
 
   namespace :books do
-    resources :page_images, only[:create, :destroy]
+    resources :page_images, only: [:create, :destroy]
   end
 
   get "memos/new" => "memos#new"
