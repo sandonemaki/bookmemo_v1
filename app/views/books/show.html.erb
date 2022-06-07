@@ -15,9 +15,9 @@
   </div>
 
   <!--画像アップロードフォームを表示-->
-  <%= form_tag("/books/#{book.id}/page_image_update", {multipart: true}) do %>
+  <%= form_tag("/books/#{book.id}/page_images/create", {multipart: true}) do %>
     <h2>画像</h2>
-    <input name="page_images[]", type="file", multiple="true" value=<%= book.page_images %>>
+    <input name="page_images[]", type="file", multiple="true" accept=".jpg, .jpeg, .png, .heic, .pdf">
     <div>
     <input type="submit" value="保存">
     </div>
@@ -25,9 +25,17 @@
 
   <!--画像一覧を表示-->
   <h2>画像一覧</h2>
-  <img src="<%= "/page_images/#{book.page_image_name}" %>?#{Time.now.to_i}"/>
-  <%# <img src="/page_images/hoge.png?12345"/> %>
-
+  <% if page_files.empty? %>
+    "画像がありません"
+  <% else %>
+    <% page_files.each |page_file| do %>
+      <img src="<%= page_file %>?#{Time.now.to_i}"/>
+    <% end %>
+  <% end %>
+  <!--
+  <img src="<%#= "/page_images/#{book.id}/#{page_image.name}" %>?#{Time.now.to_i}"/>
+  <img src="/page_images/hoge.png?12345"/>
+  -->
   </div>
 </main>
 
