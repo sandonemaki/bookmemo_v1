@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   get "books/new" => "books#new"
   get "books/:id" => "books#show"
   post "books/create" => "books#create"
-  # books/:id/page_images/
+  #   "/books/1  /page_images/create"
+  post "books/:id/page_images/create" => "books/page_images#create"
   # books/:id/page_images/:id/destroy
   namespace :books do
-    resources :page_images, only: [:create, :destroy]
+    resources :page_images, only: [:destroy]
   end
 
   get "memos/new" => "memos#new"

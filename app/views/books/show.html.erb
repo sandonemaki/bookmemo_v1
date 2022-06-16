@@ -25,12 +25,9 @@
 
   <!--画像一覧を表示-->
   <h2>画像一覧</h2>
-  <% if page_files.empty? %>
+  <% if book.page_files.empty? %>
     "画像がありません"
   <% else %>
-    <% page_files.each |page_file| do %>
-      <img src="<%= page_file %>?#{Time.now.to_i}"/>
-    <% end %>
   <% end %>
   <!--
   <img src="<%#= "/page_images/#{book.id}/#{page_image.name}" %>?#{Time.now.to_i}"/>

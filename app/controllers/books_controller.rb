@@ -34,14 +34,21 @@ class BooksController < ApplicationController
 
   def show
     book = Book.find_by(id: params[:id])
-    book_title = book.book_title
-    book_author = book.author
-    book_id = book.id
-    if FileTest.exist?("public/page_images/#{book.id}/")
-      page_files = Dir.glob("public/page_images/#{book.id}/*").sort_by { |fn| File.mtime(fn) }
+    page_files = if FileTest.exist?("public/page_images/#{book.id}/")
+      Dir.glob("public/page_images/#{book.id}/*")
+        .sort_by { |file_name| File.mtime(file_name) }
+    else
+      puts "falseだったとき"
+      puts "todo：public/page_images/#{book.id}/ディレクトリを作成する"
+      []
     end
-    show_book = ShowBook.new(book_title: book_title, author: book_author, id: book_id, page_files: page_files)
-    render("show", locals:{book: show_book})
+    show_book = ShowBook.new(
+      book_title: book.book_title,
+      author: book.author,
+      id: book.id,
+      page_files: page_files,
+    )
+    render("show", locals: {book: show_book})
   end
 
 
