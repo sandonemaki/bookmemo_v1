@@ -34,14 +34,15 @@ class BooksController < ApplicationController
 
   def show
     book = Book.find_by(id: params[:id])
-    page_files = if FileTest.exist?("public/page_images/#{book.id}/")
-      Dir.glob("public/page_images/#{book.id}/*")
-        .sort_by { |file_name| File.mtime(file_name) }
-    else
-      puts "falseだったとき"
-      puts "todo：public/page_images/#{book.id}/ディレクトリを作成する"
-      []
-    end
+   # if FileTest.exist?("public/page_images/#{book.id}/")
+    filepaths = Dir.glob("public/page_images/#{book.id}/*")
+      .sort_by { |page_file| File.mtime(page_file) }.reverse
+    page_files = filepaths.map {|f| f.gsub(/public\/page_images\/#{book.id}\//, '')}
+    # else
+      # puts "falseだったとき"
+      # puts "public/page_images/#{book.id}/ディレクトリを作成する"
+      # []
+    # end
     show_book = ShowBook.new(
       book_title: book.book_title,
       author: book.author,
@@ -50,22 +51,4 @@ class BooksController < ApplicationController
     )
     render("show", locals: {book: show_book})
   end
-
-
-  # def page_image_update
-    # if params[:page_images]
-      # book = Book.find_by(id: params[:id])
-      # page_images = params[:page_images]
-      # page_images.each {|page_image|
-        # book.page_image_name = page_image.original_filename
-        # File.binwrite("public/page_images/#{book.page_image_name}", page_image.read)
-      # }
-    # end
-    # if book.save
-      # redirect_to(request.referer)
-    # else
-      # page_image_update = PageImageUpdate.new(page_images: page_images)
-      # render("show", locals:{book: page_image_update})
-    # end
-  # end
 end

@@ -28,11 +28,9 @@
   <% if book.page_files.empty? %>
     "画像がありません"
   <% else %>
+    <% book.page_files.each do |page_file| %>
+      <img src="<%= "/page_images/#{book.id}/#{page_file}" %>?#{Time.now.to_i}"/>
+    <% end %>
   <% end %>
-  <!--
-  <img src="<%#= "/page_images/#{book.id}/#{page_image.name}" %>?#{Time.now.to_i}"/>
-  <img src="/page_images/hoge.png?12345"/>
-  -->
   </div>
 </main>
-
